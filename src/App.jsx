@@ -2,9 +2,6 @@ import { Header } from './components/header';
 import { Tasks } from './components/tasks';
 
 function App() {
-  const name = 'test';
-  console.log(name);
-
   return (
     <>
       <Header>
