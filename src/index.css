@@ -1,18 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.header {
-  background-color: #16b85f;
-  color: #fff;
-  padding: 1rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
