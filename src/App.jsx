@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Header>
-        <h1>Minha lista de tarefas</h1>
+        <h1>Teste</h1>
       </Header>
       <Tasks />
     </>
