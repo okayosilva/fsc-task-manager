@@ -1,7 +1,9 @@
 function App() {
   return (
     <>
-      <h1>Task Manager</h1>
+      <h1 className="flex flex-1 font-bold italic text-gray-500">
+        Task Manager
+      </h1>
     </>
   );
 }
