@@ -1,3 +1,6 @@
+import PlusIcon from '../../assets/icons/add.svg?react';
+import TrashIcon from '../../assets/icons/trash.svg?react';
+import { Button } from '../Button';
 import { Header } from '../Header';
 
 export const Tasks = () => {
@@ -10,8 +13,14 @@ export const Tasks = () => {
         </Header.Root>
 
         <div className="flex items-end gap-3">
-          <button>Limpar tarefas</button>
-          <button>Nova tarefa</button>
+          <Button variant="secondary">
+            <span>Limpar tarefas</span>
+            <TrashIcon />
+          </Button>
+          <Button>
+            <span>Nova tarefa</span>
+            <PlusIcon />
+          </Button>
         </div>
       </div>
     </div>
