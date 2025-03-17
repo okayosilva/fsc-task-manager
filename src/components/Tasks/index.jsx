@@ -34,6 +34,11 @@ export const Tasks = () => {
     setTask(newTasks);
   };
 
+  const handleTaskDelete = (taskId) => {
+    const newTasks = task.filter((task) => task.id !== taskId);
+    setTask(newTasks);
+  };
+
   return (
     <div className="w-full px-8 py-16">
       <div className="flex justify-between">
@@ -61,7 +66,8 @@ export const Tasks = () => {
             <TaskItem
               key={task.id}
               task={task}
-              handleTaskStatusChange={handleTaskStatusChange}
+              handleStatusChange={handleTaskStatusChange}
+              handleDelete={handleTaskDelete}
             />
           ))}
         </div>
@@ -71,7 +77,8 @@ export const Tasks = () => {
             <TaskItem
               key={task.id}
               task={task}
-              handleTaskStatusChange={handleTaskStatusChange}
+              handleStatusChange={handleTaskStatusChange}
+              handleDelete={handleTaskDelete}
             />
           ))}
         </div>
@@ -81,7 +88,8 @@ export const Tasks = () => {
             <TaskItem
               key={task.id}
               task={task}
-              handleTaskStatusChange={handleTaskStatusChange}
+              handleStatusChange={handleTaskStatusChange}
+              handleDelete={handleTaskDelete}
             />
           ))}
         </div>
