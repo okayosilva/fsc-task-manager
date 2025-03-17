@@ -32,7 +32,7 @@ export const TASKS = [
     title: 'Estudar PHP',
     description: 'Foco em funções',
     time: 'evening',
-    status: 's',
+    status: 'not_started',
   },
   {
     id: 6,

@@ -12,11 +12,28 @@ import { TaskItem } from './taskItem';
 import { TaskSeparator } from './taskSeperator';
 
 export const Tasks = () => {
-  const [task] = useState(TASKS);
+  const [task, setTask] = useState(TASKS);
 
   const morningTasks = task.filter((task) => task.time === 'morning');
   const afternoonTasks = task.filter((task) => task.time === 'afternoon');
   const eveningTasks = task.filter((task) => task.time === 'evening');
+
+  const handleTaskStatusChange = (taskId) => {
+    const newTasks = task.map((currentTask) => {
+      if (currentTask.id !== taskId) return currentTask;
+
+      if (currentTask.status === 'not_started')
+        return { ...currentTask, status: 'in_progress' };
+
+      if (currentTask.status === 'in_progress')
+        return { ...currentTask, status: 'done' };
+
+      return { ...currentTask, status: 'not_started' };
+    });
+
+    setTask(newTasks);
+  };
+
   return (
     <div className="w-full px-8 py-16">
       <div className="flex justify-between">
@@ -41,19 +58,31 @@ export const Tasks = () => {
         <div className="space-y-3">
           <TaskSeparator title="Manhã" icon={<SunIcon />} />
           {morningTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskStatusChange={handleTaskStatusChange}
+            />
           ))}
         </div>
         <div className="space-y-3">
           <TaskSeparator title="Tarde" icon={<CloudIcon />} />
           {afternoonTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskStatusChange={handleTaskStatusChange}
+            />
           ))}
         </div>
         <div className="space-y-3">
           <TaskSeparator title="Noite" icon={<MoonIcon />} />
           {eveningTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskStatusChange={handleTaskStatusChange}
+            />
           ))}
         </div>
       </div>
