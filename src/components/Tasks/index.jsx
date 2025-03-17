@@ -36,7 +36,7 @@ export const Tasks = () => {
 
       if (currentTask.status === 'done') {
         toast.success('Tarefa reiniciada com sucesso 🚀');
-        return { ...currentTask, status: 'done' };
+        return { ...currentTask, status: 'not_started' };
       }
 
       return currentTask;
