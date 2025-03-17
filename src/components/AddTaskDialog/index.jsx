@@ -33,8 +33,9 @@ export const AddTaskDialog = ({ isOpen, onClose, handleSubmit }) => {
       });
     }
 
+    setErrors(newErrors);
+
     if (newErrors.length > 0) {
-      setErrors(newErrors);
       return;
     }
 
@@ -59,7 +60,6 @@ export const AddTaskDialog = ({ isOpen, onClose, handleSubmit }) => {
       setTitle('');
       setTime('morning');
       setDescription('');
-      setErrors([]);
     }
   }, [isOpen]);
 
