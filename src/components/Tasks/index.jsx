@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import PlusIcon from '../../assets/icons/add.svg?react';
-import CloudIcon from '../../assets/icons/cloud-sun.svg?react';
-import MoonIcon from '../../assets/icons/moon.svg?react';
-import SunIcon from '../../assets/icons/sun.svg?react';
-import TrashIcon from '../../assets/icons/trash.svg?react';
+import {
+  CloudIcon,
+  MoonIcon,
+  PlusIcon,
+  SunIcon,
+  TrashIcon,
+} from '../../assets/icons';
 import { TASKS } from '../../constants/tasks';
 import { Button } from '../Button';
 import { Header } from '../Header';
