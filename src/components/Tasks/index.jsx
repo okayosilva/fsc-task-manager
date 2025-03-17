@@ -13,7 +13,6 @@ import { Button } from '../Button';
 import { Header } from '../Header';
 import { TaskItem } from './taskItem';
 import { TaskSeparator } from './taskSeperator';
-
 export const Tasks = () => {
   const [task, setTask] = useState(TASKS);
 
