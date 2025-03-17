@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 import PlusIcon from '../../assets/icons/add.svg?react';
 import CloudIcon from '../../assets/icons/cloud-sun.svg?react';
@@ -22,13 +23,22 @@ export const Tasks = () => {
     const newTasks = task.map((currentTask) => {
       if (currentTask.id !== taskId) return currentTask;
 
-      if (currentTask.status === 'not_started')
+      if (currentTask.status === 'not_started') {
+        toast.success('Tarefa iniciada com sucesso!');
         return { ...currentTask, status: 'in_progress' };
+      }
 
-      if (currentTask.status === 'in_progress')
+      if (currentTask.status === 'in_progress') {
+        toast.success('Tarefa concluída com sucesso ✅');
         return { ...currentTask, status: 'done' };
+      }
 
-      return { ...currentTask, status: 'not_started' };
+      if (currentTask.status === 'done') {
+        toast.success('Tarefa reiniciada com sucesso 🚀');
+        return { ...currentTask, status: 'done' };
+      }
+
+      return currentTask;
     });
 
     setTask(newTasks);
@@ -36,6 +46,7 @@ export const Tasks = () => {
 
   const handleTaskDelete = (taskId) => {
     const newTasks = task.filter((task) => task.id !== taskId);
+    toast('Tarefa deletada com sucesso 🎉');
     setTask(newTasks);
   };
 
