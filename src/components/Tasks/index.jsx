@@ -62,7 +62,7 @@ export const Tasks = () => {
         </Header.Root>
 
         <div className="flex items-end gap-3">
-          <Button variant="secondary">
+          <Button variant="ghost">
             <span>Limpar tarefas</span>
             <TrashIcon />
           </Button>
@@ -71,7 +71,10 @@ export const Tasks = () => {
             <PlusIcon />
           </Button>
         </div>
-        <AddTaskDialog isOpen={addTaskDialogIsOpen} />
+        <AddTaskDialog
+          isOpen={addTaskDialogIsOpen}
+          onClose={() => setAddTaskDialogIsOpen(false)}
+        />
       </div>
 
       <div className="mt-6 flex flex-col gap-6 rounded-xl bg-white p-6">
