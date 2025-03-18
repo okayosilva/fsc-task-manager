@@ -19,7 +19,7 @@ export const Sidebar = () => {
           <HomeIcon />
           <span>Início</span>
         </SidebarButton>
-        <SidebarButton variant="selected">
+        <SidebarButton color="selected">
           <TasksIcon />
           <span>Minhas Tarefas</span>
         </SidebarButton>
