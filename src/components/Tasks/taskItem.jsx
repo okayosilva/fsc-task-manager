@@ -61,7 +61,13 @@ export const TaskItem = ({ task, handleStatusChange, handleDelete }) => {
 };
 
 TaskItem.propTypes = {
-  task: PropTypes.object.isRequired,
+  task: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    time: PropTypes.oneOf(['morning', 'afternoon', 'evening']).isRequired,
+    status: PropTypes.oneOf(['done', 'in_progress', 'not_started']).isRequired,
+  }).isRequired,
   handleStatusChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
 };

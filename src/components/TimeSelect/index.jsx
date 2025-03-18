@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
 import { InputLabel } from '../Input/inputLabel';
@@ -23,8 +22,3 @@ export const TimeSelect = forwardRef((props, ref) => {
 });
 
 TimeSelect.displayName = 'TimeSelect';
-
-TimeSelect.propTypes = {
-  label: PropTypes.string.isRequired,
-  errorMessage: PropTypes.string,
-};
