@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import {
   CheckIcon,
   DetailsIcon,
@@ -56,4 +58,10 @@ export const TaskItem = ({ task, handleStatusChange, handleDelete }) => {
       </div>
     </div>
   );
+};
+
+TaskItem.propTypes = {
+  task: PropTypes.object.isRequired,
+  handleStatusChange: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
