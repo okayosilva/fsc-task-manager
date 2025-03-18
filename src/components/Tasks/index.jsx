@@ -67,7 +67,7 @@ export const Tasks = () => {
         </Header.Root>
 
         <div className="flex items-end gap-3">
-          <Button variant="ghost">
+          <Button color="ghost">
             <span>Limpar tarefas</span>
             <TrashIcon />
           </Button>

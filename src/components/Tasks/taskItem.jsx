@@ -47,7 +47,7 @@ export const TaskItem = ({ task, handleStatusChange, handleDelete }) => {
         {title}
       </div>
       <div className="flex items-center justify-center gap-2">
-        <Button onClick={() => handleDelete(id)} variant="danger">
+        <Button onClick={() => handleDelete(id)} color="danger">
           <TrashIcon />
         </Button>
         <a href="#" className="transition-all hover:opacity-75">
