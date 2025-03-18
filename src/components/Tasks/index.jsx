@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+import { baseUrl } from '../../api/baseUrl';
 import {
   CloudIcon,
   MoonIcon,
@@ -18,12 +19,51 @@ export const Tasks = () => {
   const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false);
 
   const getTaskList = async () => {
-    const response = await fetch('http://localhost:3000/tasks', {
+    const response = await fetch(`${baseUrl}/tasks`, {
       method: 'GET',
     });
 
     const tasks = await response.json();
     setTask(tasks);
+  };
+
+  const createTask = async (task) => {
+    try {
+      const response = await fetch(`${baseUrl}/tasks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(task),
+      });
+
+      if (!response.ok) {
+        toast.error('Erro ao criar tarefa ❌');
+        throw new Error(`Erro ao criar a tarefa: ${response.statusText}`);
+      }
+
+      toast.success('Tarefa criada com sucesso 🎉');
+    } catch (error) {
+      console.log(error);
+      toast.error('Erro ao criar tarefa ❌');
+      throw error;
+    }
+  };
+
+  const deleteTask = async (id) => {
+    try {
+      const response = await fetch(`${baseUrl}/tasks/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        toast.error('Erro ao deletar tarefa ❌');
+        throw new Error(`Erro ao criar a tarefa: ${response.statusText}`);
+      }
+
+      toast('Tarefa deletada com sucesso 🎉');
+    } catch (error) {
+      toast.error('Erro ao deletar tarefa ❌');
+      throw error;
+    }
   };
 
   useEffect(() => {
@@ -60,14 +100,16 @@ export const Tasks = () => {
   };
 
   const handleTaskDelete = (taskId) => {
-    const newTasks = task.filter((task) => task.id !== taskId);
-    toast('Tarefa deletada com sucesso 🎉');
-    setTask(newTasks);
+    deleteTask(taskId).then(() => {
+      const newTasks = task.filter((task) => task.id !== taskId);
+      setTask(newTasks);
+    });
   };
 
   const handleAddTaskSubmit = (task) => {
-    setTask((prevState) => [...prevState, task]);
-    toast.success('Tarefa criada com sucesso ✈️');
+    createTask(task).then(() => {
+      setTask((prevState) => [...prevState, task]);
+    });
   };
 
   return (
