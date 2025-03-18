@@ -1,3 +1,5 @@
 export const Title = ({ children }) => {
-  return <h2 className="text-xl font-semibold text-[#35383E]">{children}</h2>;
+  return (
+    <h2 className="text-xl font-semibold text-brand-dark-blue">{children}</h2>
+  );
 };

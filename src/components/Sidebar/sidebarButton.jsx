@@ -2,8 +2,8 @@ export const SidebarButton = ({ variant = 'unselected', children }) => {
   const getVariantClasses = () => {
     const variantSelected =
       variant === 'unselected'
-        ? 'text-[#35383E]'
-        : 'bg-[#E6F7F8] text-[#00ADB5]';
+        ? 'text-brand-dark-blue'
+        : 'bg-brand-primary bg-opacity-15 text-brand-primary';
 
     return `rounded-lg px-6 py-3 flex items-center gap-2 ${variantSelected}`;
   };

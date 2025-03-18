@@ -6,10 +6,10 @@ export const Button = ({
   ...props
 }) => {
   const variantsColors = {
-    primary: 'bg-[#00ADB5] text-white',
-    secondary: 'bg-[#EEEEEE] text-[#35383E]',
-    ghost: 'text-[#818181] bg-none',
-    danger: 'text-[#818181] hover:text-[#e21f1f] bg-none',
+    primary: 'bg-brand-primary text-white',
+    secondary: 'bg-brand-light-gray text-brand-dark-blue',
+    ghost: 'text-brand-dark-gray bg-none',
+    danger: 'text-brand-dark-gray hover:text-brand-danger bg-none',
   };
 
   const variantsSize = {

@@ -9,7 +9,7 @@ export const Input = forwardRef(({ label, errorMessage, ...props }, ref) => {
       <InputLabel label={label} htmlFor={props.id} />
       <input
         type="text"
-        className="w-full rounded-lg border border-solid border-[#ECECEC] px-4 py-3 outline-[#00ADB5] placeholder:text-sm placeholder:text-[#9A9C9F]"
+        className="w-full rounded-lg border border-solid border-brand-border-input px-4 py-3 outline-brand-primary placeholder:text-sm placeholder:text-brand-text-gray"
         ref={ref}
         {...props}
       />

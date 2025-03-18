@@ -12,9 +12,9 @@ export const TaskItem = ({ task, handleStatusChange, handleDelete }) => {
   const inProgress = status === 'in_progress';
 
   const statusColors = {
-    done: 'bg-[#00ADB5] text-[#00ADB5]',
-    in_progress: 'bg-[#FFAA04] text-[#FFAA04]',
-    not_started: 'bg-[#35383E] bg-opacity-10 text-[#35383E]',
+    done: 'bg-brand-primary text-brand-primary',
+    in_progress: 'bg-brand-process text-brand-process',
+    not_started: 'bg-brand-dark-blue bg-opacity-10 text-brand-dark-blue',
   };
 
   const getStatusClasses = () => {
