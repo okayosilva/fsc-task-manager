@@ -48,24 +48,6 @@ export const Tasks = () => {
     }
   };
 
-  const deleteTask = async (id) => {
-    try {
-      const response = await fetch(`${baseUrl}/tasks/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        toast.error('Erro ao deletar tarefa ❌');
-        throw new Error(`Erro ao criar a tarefa: ${response.statusText}`);
-      }
-
-      toast('Tarefa deletada com sucesso 🎉');
-    } catch (error) {
-      toast.error('Erro ao deletar tarefa ❌');
-      throw error;
-    }
-  };
-
   useEffect(() => {
     getTaskList();
   }, []);
@@ -99,11 +81,10 @@ export const Tasks = () => {
     setTask(newTasks);
   };
 
-  const handleTaskDelete = (taskId) => {
-    deleteTask(taskId).then(() => {
-      const newTasks = task.filter((task) => task.id !== taskId);
-      setTask(newTasks);
-    });
+  const handleTaskDeleteSuccess = (taskId) => {
+    const newTasks = task.filter((task) => task.id !== taskId);
+    setTask(newTasks);
+    toast('Tarefa deletada com sucesso 🎉');
   };
 
   const handleAddTaskSubmit = (task) => {
@@ -145,7 +126,7 @@ export const Tasks = () => {
               key={task.id}
               task={task}
               handleStatusChange={handleTaskStatusChange}
-              handleDelete={handleTaskDelete}
+              onDeleteSuccess={handleTaskDeleteSuccess}
             />
           ))}
         </div>
@@ -156,7 +137,7 @@ export const Tasks = () => {
               key={task.id}
               task={task}
               handleStatusChange={handleTaskStatusChange}
-              handleDelete={handleTaskDelete}
+              onDeleteSuccess={handleTaskDeleteSuccess}
             />
           ))}
         </div>
@@ -167,7 +148,7 @@ export const Tasks = () => {
               key={task.id}
               task={task}
               handleStatusChange={handleTaskStatusChange}
-              handleDelete={handleTaskDelete}
+              onDeleteSuccess={handleTaskDeleteSuccess}
             />
           ))}
         </div>

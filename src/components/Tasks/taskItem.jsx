@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
+import { baseUrl } from '../../api/baseUrl';
 import {
   CheckIcon,
   DetailsIcon,
@@ -8,7 +11,9 @@ import {
 } from '../../assets/icons';
 import { Button } from '../Button';
 
-export const TaskItem = ({ task, handleStatusChange, handleDelete }) => {
+export const TaskItem = ({ task, handleStatusChange, onDeleteSuccess }) => {
+  const [deleteIsLoading, setDeleteIsLoading] = useState(false);
+
   const { id, title, status } = task;
   const checked = status === 'done';
   const inProgress = status === 'in_progress';
@@ -29,6 +34,28 @@ export const TaskItem = ({ task, handleStatusChange, handleDelete }) => {
     return statusColors.not_started;
   };
 
+  const onDeleteClick = async (id) => {
+    setDeleteIsLoading(true);
+    try {
+      const response = await fetch(`${baseUrl}/tasks/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        toast.error('Erro ao deletar tarefa ❌');
+        setDeleteIsLoading(false);
+        throw new Error(`Erro ao criar a tarefa: ${response.statusText}`);
+      }
+
+      onDeleteSuccess(id);
+      setDeleteIsLoading(false);
+    } catch (error) {
+      toast.error('Erro ao deletar tarefa ❌');
+      setDeleteIsLoading(false);
+      throw error;
+    }
+  };
+
   return (
     <div
       className={`flex items-center rounded-lg bg-opacity-10 px-4 py-3 text-sm ${getStatusClasses()} justify-between transition`}
@@ -44,13 +71,21 @@ export const TaskItem = ({ task, handleStatusChange, handleDelete }) => {
             className="absolute h-full w-full cursor-pointer opacity-0"
           />
           {checked && <CheckIcon />}
-          {inProgress && <LoaderIcon className="animate-spin" />}
+          {inProgress && <LoaderIcon className="animate-spin text-white" />}
         </label>
         {title}
       </div>
       <div className="flex items-center justify-center gap-2">
-        <Button onClick={() => handleDelete(id)} color="danger">
-          <TrashIcon />
+        <Button
+          onClick={() => onDeleteClick(id)}
+          color="danger"
+          disabled={deleteIsLoading}
+        >
+          {deleteIsLoading ? (
+            <LoaderIcon className="animate-spin text-brand-dark-blue" />
+          ) : (
+            <TrashIcon />
+          )}
         </Button>
         <a href="#" className="transition-all hover:opacity-75">
           <DetailsIcon />
@@ -68,6 +103,7 @@ TaskItem.propTypes = {
     time: PropTypes.oneOf(['morning', 'afternoon', 'evening']).isRequired,
     status: PropTypes.oneOf(['done', 'in_progress', 'not_started']).isRequired,
   }).isRequired,
+  isLoading: PropTypes.bool,
   handleStatusChange: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
+  onDeleteSuccess: PropTypes.func.isRequired,
 };
