@@ -4,19 +4,49 @@ import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
+import { toast } from 'sonner';
 import { v4 } from 'uuid';
 
+import { baseUrl } from '../../api/baseUrl';
+import { LoaderIcon } from '../../assets/icons';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import { TimeSelect } from '../TimeSelect';
 
-export const AddTaskDialog = ({ isOpen, onClose, handleSubmit }) => {
+export const AddTaskDialog = ({ isOpen, onClose, onCreateTaskSuccess }) => {
   const [errors, setErrors] = useState([]);
+  const [createTaskIsLoading, setCreateTaskIsLoading] = useState(false);
 
   const nodeRef = useRef();
   const titleRef = useRef();
   const timeRef = useRef();
   const descriptionRef = useRef();
+
+  const handleCreateTask = async (task) => {
+    setCreateTaskIsLoading(true);
+    try {
+      const response = await fetch(`${baseUrl}/tasks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(task),
+      });
+
+      if (!response.ok) {
+        toast.error('Erro ao criar tarefa ❌');
+        setCreateTaskIsLoading(false);
+        throw new Error(`Erro ao criar a tarefa: ${response.statusText}`);
+      }
+      onCreateTaskSuccess(task);
+      setCreateTaskIsLoading(false);
+      onClose();
+    } catch (error) {
+      console.log(error);
+      onClose();
+      toast.error('Erro ao criar tarefa ❌');
+      setCreateTaskIsLoading(false);
+      throw error;
+    }
+  };
 
   const handleCreateClick = () => {
     const title = titleRef.current.value;
@@ -44,15 +74,13 @@ export const AddTaskDialog = ({ isOpen, onClose, handleSubmit }) => {
       return;
     }
 
-    handleSubmit({
+    handleCreateTask({
       id: v4(),
       title,
       time: timeRef.current.value,
       description,
       status: 'not_started',
     });
-
-    onClose();
   };
 
   const titleError = errors.find((error) => error.inputName === 'title');
@@ -107,6 +135,7 @@ export const AddTaskDialog = ({ isOpen, onClose, handleSubmit }) => {
                     size="large"
                     className="w-full"
                     onClick={onClose}
+                    disabled={createTaskIsLoading}
                   >
                     Cancelar
                   </Button>
@@ -114,8 +143,13 @@ export const AddTaskDialog = ({ isOpen, onClose, handleSubmit }) => {
                     size="large"
                     className="w-full"
                     onClick={handleCreateClick}
+                    disabled={createTaskIsLoading}
                   >
-                    Criar Tarefa
+                    {createTaskIsLoading ? (
+                      <LoaderIcon className="animate-spin text-white" />
+                    ) : (
+                      'Criar Tarefa'
+                    )}
                   </Button>
                 </div>
               </div>
@@ -131,5 +165,5 @@ export const AddTaskDialog = ({ isOpen, onClose, handleSubmit }) => {
 AddTaskDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  onCreateTaskSuccess: PropTypes.func.isRequired,
 };

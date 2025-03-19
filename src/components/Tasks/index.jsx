@@ -27,27 +27,6 @@ export const Tasks = () => {
     setTask(tasks);
   };
 
-  const createTask = async (task) => {
-    try {
-      const response = await fetch(`${baseUrl}/tasks`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(task),
-      });
-
-      if (!response.ok) {
-        toast.error('Erro ao criar tarefa ❌');
-        throw new Error(`Erro ao criar a tarefa: ${response.statusText}`);
-      }
-
-      toast.success('Tarefa criada com sucesso 🎉');
-    } catch (error) {
-      console.log(error);
-      toast.error('Erro ao criar tarefa ❌');
-      throw error;
-    }
-  };
-
   useEffect(() => {
     getTaskList();
   }, []);
@@ -87,10 +66,9 @@ export const Tasks = () => {
     toast('Tarefa deletada com sucesso 🎉');
   };
 
-  const handleAddTaskSubmit = (task) => {
-    createTask(task).then(() => {
-      setTask((prevState) => [...prevState, task]);
-    });
+  const handleAddTaskSubmitSuccess = (task) => {
+    setTask((prev) => [...prev, task]);
+    toast('Tarefa criada com sucesso 🎉');
   };
 
   return (
@@ -114,7 +92,7 @@ export const Tasks = () => {
         <AddTaskDialog
           isOpen={addTaskDialogIsOpen}
           onClose={() => setAddTaskDialogIsOpen(false)}
-          handleSubmit={handleAddTaskSubmit}
+          onCreateTaskSuccess={handleAddTaskSubmitSuccess}
         />
       </div>
 

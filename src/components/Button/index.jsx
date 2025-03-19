@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 
 export const Button = ({ color, size, className, children, ...props }) => {
   const button = tv({
-    base: 'flex items-center justify-center gap-2 rounded-md px-3 font-semibold transition hover:opacity-75',
+    base: `flex items-center justify-center gap-2 rounded-md px-3 font-semibold transition hover:opacity-75 ${props.disabled && 'opacity-50'}`,
     variants: {
       color: {
         primary: 'bg-brand-primary text-white',
@@ -15,6 +15,9 @@ export const Button = ({ color, size, className, children, ...props }) => {
         small: 'py-1 text-xs',
         large: 'py-2 text-sm',
       },
+      disabled: {
+        true: "hover:opacity-50' cursor-not-allowed opacity-50",
+      },
     },
     defaultVariants: {
       color: 'primary',
@@ -23,7 +26,10 @@ export const Button = ({ color, size, className, children, ...props }) => {
   });
 
   return (
-    <button className={button({ color, size, className })} {...props}>
+    <button
+      className={button({ color, size, disabled: props.disabled, className })}
+      {...props}
+    >
       {children}
     </button>
   );
