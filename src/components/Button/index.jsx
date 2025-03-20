@@ -10,6 +10,7 @@ export const Button = ({ color, size, className, children, ...props }) => {
         secondary: 'bg-brand-light-gray text-brand-dark-blue',
         ghost: 'bg-none text-brand-dark-gray',
         danger: 'bg-none text-brand-dark-gray hover:text-brand-danger',
+        delete: 'bg-brand-danger text-white',
       },
       size: {
         small: 'py-1 text-xs',
@@ -36,7 +37,7 @@ export const Button = ({ color, size, className, children, ...props }) => {
 };
 
 Button.propTypes = {
-  color: PropTypes.oneOf(['primary', 'secondary', 'ghost', 'danger']),
+  color: PropTypes.oneOf(['primary', 'secondary', 'ghost', 'danger', 'delete']),
   size: PropTypes.oneOf(['small', 'large']),
   className: PropTypes.string,
   children: PropTypes.node.isRequired,

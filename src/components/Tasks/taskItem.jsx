@@ -38,7 +38,7 @@ export const TaskItem = ({ task, handleStatusChange, onDeleteSuccess }) => {
   const onDeleteClick = async (id) => {
     setDeleteIsLoading(true);
     try {
-      const response = await fetch(`${baseUrl}/tasks/${id}`, {
+      const response = await fetch(`${baseUrl}/${id}`, {
         method: 'DELETE',
       });
 

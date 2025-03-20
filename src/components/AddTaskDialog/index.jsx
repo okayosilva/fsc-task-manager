@@ -1,6 +1,5 @@
 import './addTaskDialog.css';
 
-import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
@@ -25,7 +24,7 @@ export const AddTaskDialog = ({ isOpen, onClose, onCreateTaskSuccess }) => {
   const handleCreateTask = async (task) => {
     setCreateTaskIsLoading(true);
     try {
-      const response = await fetch(`${baseUrl}/tasks`, {
+      const response = await fetch(baseUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(task),
@@ -54,14 +53,14 @@ export const AddTaskDialog = ({ isOpen, onClose, onCreateTaskSuccess }) => {
 
     const newErrors = [];
 
-    if (!titleRef.current.value.trim()) {
+    if (!title.trim()) {
       newErrors.push({
         inputName: 'title',
         message: 'O Título é obrigatório.',
       });
     }
 
-    if (!descriptionRef.current.value.trim()) {
+    if (!description.trim()) {
       newErrors.push({
         inputName: 'description',
         message: 'A Descrição é obrigatória.',
@@ -162,10 +161,4 @@ export const AddTaskDialog = ({ isOpen, onClose, onCreateTaskSuccess }) => {
       </>
     </CSSTransition>
   );
-};
-
-AddTaskDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onCreateTaskSuccess: PropTypes.func.isRequired,
 };

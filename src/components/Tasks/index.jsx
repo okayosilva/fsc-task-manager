@@ -19,7 +19,7 @@ export const Tasks = () => {
   const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false);
 
   const getTaskList = async () => {
-    const response = await fetch(`${baseUrl}/tasks`, {
+    const response = await fetch(baseUrl, {
       method: 'GET',
     });
 
