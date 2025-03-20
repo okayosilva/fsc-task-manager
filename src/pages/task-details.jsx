@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { baseUrl } from '../api/baseUrl';
@@ -58,8 +58,8 @@ export const TaskDetails = () => {
         setIsLoadingToUpdate(false);
         throw new Error(`Erro ao atualizar tarefa: ${response.statusText}`);
       }
-
-      setTask(task);
+      const updatedTask = await response.json();
+      setTask(updatedTask);
       setIsLoadingToUpdate(false);
       toast.success('Tarefa atualizada com sucesso ✅');
     } catch (error) {
@@ -156,12 +156,9 @@ export const TaskDetails = () => {
                 </button>
               </div>
               <div className="flex items-center gap-1 text-xs">
-                <span
-                  className="cursor-pointer text-brand-text-gray"
-                  onClickCapture={handleBackClick}
-                >
+                <Link className="cursor-pointer text-brand-text-gray" to="/">
                   Minhas Tarefas
-                </span>
+                </Link>
                 <ChevronRightIcon className="text-brand-text-gray" />
                 <span className="font-semibold text-brand-primary">
                   {task?.title}

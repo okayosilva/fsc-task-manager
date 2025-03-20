@@ -96,41 +96,70 @@ export const Tasks = () => {
         />
       </div>
 
-      <div className="mt-6 flex flex-col gap-6 rounded-xl bg-white p-6">
-        <div className="space-y-3">
-          <TaskSeparator title="Manhã" icon={<SunIcon />} />
-          {morningTasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              handleStatusChange={handleTaskStatusChange}
-              onDeleteSuccess={handleTaskDeleteSuccess}
-            />
-          ))}
+      {morningTasks.length === 0 &&
+      afternoonTasks.length === 0 &&
+      eveningTasks.length === 0 ? (
+        <div className="mt-6 flex flex-col items-center justify-center gap-4 rounded-xl bg-white p-6">
+          <p className="max-w-80 text-center text-sm font-medium text-brand-text-gray">
+            Você ainda não tem tarefas, crie uma tarefa para começar a trabalhar
+            🚀
+          </p>
+          <Button size="large" onClick={() => setAddTaskDialogIsOpen(true)}>
+            Criar tarefa
+          </Button>
         </div>
-        <div className="space-y-3">
-          <TaskSeparator title="Tarde" icon={<CloudIcon />} />
-          {afternoonTasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              handleStatusChange={handleTaskStatusChange}
-              onDeleteSuccess={handleTaskDeleteSuccess}
-            />
-          ))}
+      ) : (
+        <div className="mt-6 flex flex-col gap-6 rounded-xl bg-white p-6">
+          <div className="space-y-3">
+            <TaskSeparator title="Manhã" icon={<SunIcon />} />
+            {morningTasks.length === 0 && (
+              <p className="text-sm font-medium text-brand-text-gray">
+                Você não tem tarefas para o horário da manhã.
+              </p>
+            )}
+            {morningTasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                handleStatusChange={handleTaskStatusChange}
+                onDeleteSuccess={handleTaskDeleteSuccess}
+              />
+            ))}
+          </div>
+          <div className="space-y-3">
+            <TaskSeparator title="Tarde" icon={<CloudIcon />} />
+            {afternoonTasks.length === 0 && (
+              <p className="text-sm font-medium text-brand-text-gray">
+                Você não tem tarefas para o horário da tarde.
+              </p>
+            )}
+            {afternoonTasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                handleStatusChange={handleTaskStatusChange}
+                onDeleteSuccess={handleTaskDeleteSuccess}
+              />
+            ))}
+          </div>
+          <div className="space-y-3">
+            <TaskSeparator title="Noite" icon={<MoonIcon />} />
+            {eveningTasks.length === 0 && (
+              <p className="text-sm font-medium text-brand-text-gray">
+                Você não tem tarefas para o horário da noite.
+              </p>
+            )}
+            {eveningTasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                handleStatusChange={handleTaskStatusChange}
+                onDeleteSuccess={handleTaskDeleteSuccess}
+              />
+            ))}
+          </div>
         </div>
-        <div className="space-y-3">
-          <TaskSeparator title="Noite" icon={<MoonIcon />} />
-          {eveningTasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              handleStatusChange={handleTaskStatusChange}
-              onDeleteSuccess={handleTaskDeleteSuccess}
-            />
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
