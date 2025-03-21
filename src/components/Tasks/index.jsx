@@ -12,11 +12,14 @@ import {
 import { AddTaskDialog } from '../AddTaskDialog';
 import { Button } from '../Button';
 import { Header } from '../Header';
+import { RemoveAllTaskListDialog } from '../RemoveAllTaskListDialog';
 import { TaskItem } from './taskItem';
 import { TaskSeparator } from './taskSeperator';
 export const Tasks = () => {
   const [task, setTask] = useState([]);
   const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false);
+  const [removeAllTasksIsOpen, setRemoveAllTasksIsOpen] = useState(false);
+  const [removeAllTasksIsLoading, setRemoveAllTasksIsLoading] = useState(false);
 
   const getTaskList = async () => {
     const response = await fetch(baseUrl, {
@@ -71,6 +74,33 @@ export const Tasks = () => {
     toast('Tarefa criada com sucesso 🎉');
   };
 
+  const handleRemoveAllTasks = async () => {
+    if (task.length === 0) {
+      toast.error('Não há tarefas para deletar ❌');
+      setRemoveAllTasksIsOpen(false);
+      return;
+    }
+
+    setRemoveAllTasksIsLoading(true);
+    try {
+      const deletePromises = task.map((taskItem) =>
+        fetch(`${baseUrl}/${taskItem.id}`, { method: 'DELETE' })
+      );
+
+      await Promise.all(deletePromises);
+
+      setTask([]);
+      setRemoveAllTasksIsLoading(false);
+      setRemoveAllTasksIsOpen(false);
+      toast.success('Todas as tarefas foram deletadas com sucesso ✅');
+    } catch (error) {
+      toast.error('Erro ao deletar todas suas as suas tarefas ❌');
+      setRemoveAllTasksIsLoading(false);
+      setRemoveAllTasksIsOpen(false);
+      throw error;
+    }
+  };
+
   return (
     <div className="w-full px-8 py-16">
       <div className="flex justify-between">
@@ -80,7 +110,7 @@ export const Tasks = () => {
         </Header.Root>
 
         <div className="flex items-end gap-3">
-          <Button color="ghost">
+          <Button color="ghost" onClick={() => setRemoveAllTasksIsOpen(true)}>
             <span>Limpar tarefas</span>
             <TrashIcon />
           </Button>
@@ -93,6 +123,12 @@ export const Tasks = () => {
           isOpen={addTaskDialogIsOpen}
           onClose={() => setAddTaskDialogIsOpen(false)}
           onCreateTaskSuccess={handleAddTaskSubmitSuccess}
+        />
+        <RemoveAllTaskListDialog
+          isOpen={removeAllTasksIsOpen}
+          handleDeleteAllTasks={handleRemoveAllTasks}
+          isLoading={removeAllTasksIsLoading}
+          onClose={() => setRemoveAllTasksIsOpen(false)}
         />
       </div>
 

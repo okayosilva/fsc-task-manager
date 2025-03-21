@@ -1,0 +1,17 @@
+.remove-all-task-dialog {
+  opacity: 0;
+}
+
+.remove-all-task-dialog-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.remove-all-task-dialog-exit {
+  opacity: 1;
+}
+
+.remove-all-task-dialog-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}

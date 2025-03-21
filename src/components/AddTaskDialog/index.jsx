@@ -9,6 +9,7 @@ import { v4 } from 'uuid';
 import { baseUrl } from '../../api/baseUrl';
 import { LoaderIcon } from '../../assets/icons';
 import { Button } from '../Button';
+import { Dialog } from '../Dialog';
 import { Input } from '../Input';
 import { TimeSelect } from '../TimeSelect';
 
@@ -97,19 +98,12 @@ export const AddTaskDialog = ({ isOpen, onClose, onCreateTaskSuccess }) => {
     >
       <>
         {createPortal(
-          <div
-            ref={nodeRef}
-            className="fixed inset-0 flex h-screen w-screen items-center justify-center backdrop-blur-sm"
-          >
-            <div className="rounded-xl bg-white p-5 text-center shadow">
-              <h2 className="text-xl font-semibold text-brand-dark-blue">
-                Nova Tarefa
-              </h2>
-              <p className="mb-4 mt-1 text-sm text-brand-text-gray">
-                Insira as informações abaixo
-              </p>
+          <Dialog.Root ref={nodeRef}>
+            <Dialog.Body>
+              <Dialog.Title>Nova Tarefa</Dialog.Title>
+              <Dialog.SubTitle>Insira as informações abaixo</Dialog.SubTitle>
 
-              <div className="flex w-[336px] flex-col space-y-4">
+              <Dialog.Content>
                 <Input
                   id="title"
                   label="Título"
@@ -153,9 +147,9 @@ export const AddTaskDialog = ({ isOpen, onClose, onCreateTaskSuccess }) => {
                     )}
                   </Button>
                 </div>
-              </div>
-            </div>
-          </div>,
+              </Dialog.Content>
+            </Dialog.Body>
+          </Dialog.Root>,
           document.body
         )}
       </>
